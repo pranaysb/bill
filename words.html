@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        function numberToWords(num) {
+            const ones = [
+                '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+                'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
+            ];
+        
+            const tens = [
+                '', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'
+            ];
+        
+            const thousands = [
+                '', 'Thousand', 'Lakh', 'Crore'
+            ];
+        
+            function convert(num, index) {
+                if (num === 0) return '';
+                
+                let word = '';
+                if (num > 99) {
+                    word += ones[Math.floor(num / 100)] + ' Hundred ';
+                    num = num % 100;
+                }
+                
+                if (num > 19) {
+                    word += tens[Math.floor(num / 10)] + ' ';
+                    num = num % 10;
+                }
+                
+                if (num > 0) {
+                    word += ones[num] + ' ';
+                }
+        
+                return word.trim() + (thousands[index] ? ' ' + thousands[index] : '') + ' ';
+            }
+        
+            let result = '';
+            let index = 0;
+        
+            while (num > 0) {
+                let part = num % 1000;
+                if (part > 0) {
+                    result = convert(part, index) + result;
+                }
+                num = Math.floor(num / 1000);
+                index++;
+            }
+        
+            return result.trim() || 'Zero';
+        }
+        
+        function convertAmountToWords(amount) {
+            let rupees = Math.floor(amount); // Get the whole rupees part
+            let paise = Math.round((amount - rupees) * 100); // Get the paise part
+        
+            let rupeesInWords = numberToWords(rupees) + ' Rupees';
+            let paiseInWords = paise > 0 ? numberToWords(paise) + ' Paise' : '';
+        
+            if (paiseInWords) {
+                return `${rupeesInWords} and ${paiseInWords} only.`;
+            } else {
+                return `${rupeesInWords} only.`;
+            }
+        }
+console.log(convertAmountToWords(122.22))
+    </script>
+</body>
+</html>

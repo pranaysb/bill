@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bill Maker</title>
+    <link rel="stylesheet" href="bill-maker.css">
+</head>
+<body>
+    <h2>Enter Billing Details</h2>
+    Enter the Invoice No: <input class="billno" id="billno" placeholder="Bill Number"><br><br>
+    Enter the Buyer Address: <textarea class="buyer" id="buyer" placeholder="Enter Buyer Address" rows="4" cols="50"></textarea><br><br>
+    Enter Billing Date: <input class="date" id="date" placeholder="Enter a date"><br><br>
+    Enter Vehicle Number: <input class="vehicle" id="vehicle" placeholder="Vehicle Number"><br><br>
+    Enter Number of Bags: <input class="quantity" id="quantity" placeholder="Quantity"><br><br>
+    Enter Total Amount: <input class="amount" id="amount" placeholder="Amount"><br><br>
+    <button onclick="storeData()">Submit</button>
+
+    <script>
+        function storeData() {
+            const billno = document.getElementById('billno').value;
+            const buyer = document.getElementById('buyer').value;
+            const date = document.getElementById('date').value;
+            const vehicle = document.getElementById('vehicle').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (isNaN(quantity) || isNaN(amount) || quantity <= 0 || amount <= 0) {
+                alert("Please enter valid values for Quantity and Amount.");
+                return;
+            }
+            const rate=(amount/quantity);
+            const taxless=amount/1.28;
+            const taxAmount=taxless*0.14;
+            localStorage.setItem('billno', billno);
+            localStorage.setItem('buyer', buyer);
+            localStorage.setItem('date', date);
+            localStorage.setItem('vehicle', vehicle);
+            localStorage.setItem('quantity', quantity);
+    localStorage.setItem('amount', amount.toFixed(2));
+    localStorage.setItem('rate', rate.toFixed(2));
+    localStorage.setItem('taxless', taxless.toFixed(2));
+    localStorage.setItem('taxAmount', taxAmount.toFixed(2));
+
+
+            window.location.href = 'bill.html';
+        }
+    </script>
+</body>
+</html>

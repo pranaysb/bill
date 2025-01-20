@@ -1,0 +1,177 @@
+.tax-invoice{
+    margin-left:30px;
+}
+.main{
+    height:980px;
+    width: 700px;
+    border:solid;
+    border-color:black;
+
+    margin-left: 30px;
+    /* margin-top:10px; */
+}
+.top-div{
+    height:300px;
+   border-bottom: solid;
+   border-bottom-color: black;
+   display:grid;
+   grid-template-columns: 1fr 1fr;
+}
+.top-left{
+    border-right-color: black;
+    border-right:solid;
+    display:grid;
+    grid-template-rows:1fr 1fr;
+}
+.seller{
+    border-bottom: solid;
+   border-bottom-color: black;
+   display:grid;
+   grid-template-columns:100px 1fr;
+}
+.logo{
+    width:100px;
+    height:100px;
+}
+.top-right{
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.one,.two,.three,.four,.five,.six,.seven{
+    
+border-bottom-color:black;
+border-bottom:solid;
+display:grid;
+grid-template-columns: 1fr 1fr;
+}
+.left,.right{
+border-right-color: black;
+border-right:solid;
+}
+
+.mid-div{
+    height:310px;
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-rows: 40px 200px 30px 40px;
+}
+.content-heads{
+    text-align: center;
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid; 
+     align-items: stretch;
+    grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
+}
+.content{
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid;
+     align-items: stretch;
+     align-items: stretch;
+     grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
+}
+.total{
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid;
+     grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
+}
+
+.total-words{
+    border-bottom-color:black;
+    border-bottom:solid;
+
+}
+.description,.sl-no,.quantity,.per,.amount,.HSN-SAC,.gst-rate,.rate{
+border-right-color:black;
+border-right:solid;
+}
+.description{
+    align-items: justify;
+}
+
+.tax-div{
+    height:100px;
+    display:grid;
+    grid-template-rows:50px 25px 25px;
+}
+.tax-head{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
+}
+.tax-hsn{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
+}
+.tax-total{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
+}
+
+.tax-desc,.central-tax,.state-tax,.total-tax,.tax-value{
+   
+    text-align: center;
+ border-right-color: black;
+border-right:solid;
+}
+.central-tax,.state-tax{
+    display:grid;
+    grid-template-rows:25px 1fr;
+}
+.tax-top{
+    text-align: center;
+    border-bottom-color:black;
+    border-bottom:solid;
+}
+.tax-bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+.tax-bottom-element{
+    border-right-color: black;
+    border-right:solid;
+}
+.tax-words{
+    border-bottom-color:black;
+    border-bottom:solid;
+    height:30px;
+}
+.bottom-div{
+    margin-top:15px;
+    border-top: solid;
+    border-bottom:solid;
+    border-bottom-color:black;
+    border-top-color:black;
+    display:grid;
+    grid-template-rows:120px 1fr;
+}
+.declaration{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom:solid;
+    border-bottom-color:black;
+}
+.dec-right{
+    margin-left:10px;
+    margin-top:20px;
+}
+.sign-seal{
+    height:100px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+.cust-sign{
+    border-right-color: black;
+    border-right:solid;
+}
+.conclusion{
+    text-align: center;
+}
