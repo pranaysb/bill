@@ -1,174 +1,178 @@
-/* General Styles */
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 11pt;  /* Adjust font size for better fit */
-    font-family: Arial, sans-serif;
+.tax-invoice{
+    margin-left:30px;
+}
+.main{
+    height:980px;
+    width: 700px;
+    border:solid;
+    border-color:black;
+
+    margin-left: 30px;
+    /* margin-top:10px; */
+}
+.top-div{
+    height:300px;
+   border-bottom: solid;
+   border-bottom-color: black;
+   display:grid;
+   grid-template-columns: 1fr 1fr;
+}
+.top-left{
+    border-right-color: black;
+    border-right:solid;
+    display:grid;
+    grid-template-rows:1fr 1fr;
+}
+.seller{
+    border-bottom: solid;
+   border-bottom-color: black;
+   display:grid;
+   grid-template-columns:100px 1fr;
+}
+.logo{
+    width:100px;
+    height:100px;
+}
+.top-right{
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.one,.two,.three,.four,.five,.six,.seven{
+    
+border-bottom-color:black;
+border-bottom:solid;
+display:grid;
+grid-template-columns: 1fr 1fr;
+}
+.left,.right{
+border-right-color: black;
+border-right:solid;
 }
 
-/* Centering the main bill container and adjusting width */
-.main {
-    width: 7.5in;  /* Fit within 8.5-inch width with margin */
-    height: auto;  /* Allow height to adjust dynamically */
-    border: 1px solid black;
-    padding: 0.5in;
-    box-sizing: border-box;
-    margin: 0 auto;
+.mid-div{
+    height:310px;
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-rows: 40px 200px 30px 40px;
 }
-
-/* Header adjustments */
-.tax-invoice {
-    margin-left: 0;
+.content-heads{
     text-align: center;
-    font-size: 16pt;
-    font-weight: bold;
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid; 
+     align-items: stretch;
+    grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
+}
+.content{
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid;
+     align-items: stretch;
+     align-items: stretch;
+     grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
+}
+.total{
+    border-bottom-color:black;
+    border-bottom:solid;
+     display:grid;
+     grid-template-columns: 50px 180px 80px 60px 80px 80px 60px 110px ; 
 }
 
-/* Section grid layouts */
-.top-div, .mid-div, .bottom-div, .tax-div {
-    width: 100%;
-    display: grid;
-    gap: 5px; /* Reduce gap to fit content */
+.total-words{
+    border-bottom-color:black;
+    border-bottom:solid;
+
+}
+.description,.sl-no,.quantity,.per,.amount,.HSN-SAC,.gst-rate,.rate{
+border-right-color:black;
+border-right:solid;
+}
+.description{
+    align-items: justify;
 }
 
-/* Ensure content fits well */
-.top-div {
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid black;
+.tax-div{
+    height:100px;
+    display:grid;
+    grid-template-rows:50px 25px 25px;
+}
+.tax-head{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
+}
+.tax-hsn{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
+}
+.tax-total{
+    border-bottom-color:black;
+    border-bottom:solid;
+    display:grid;
+    grid-template-columns:230px 80px 140px 140px 110px;
 }
 
-.top-left {
-    border-right: 1px solid black;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-}
-
-.seller {
-    border-bottom: 1px solid black;
-    display: grid;
-    grid-template-columns: 100px 1fr;
-}
-
-.logo {
-    width: 80px;  /* Reduce logo size to fit */
-    height: 80px;
-}
-
-.top-right {
-    display: grid;
-    grid-template-rows: repeat(7, 1fr);
-}
-
-.one, .two, .three, .four, .five, .six, .seven {
-    border-bottom: 1px solid black;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.left, .right {
-    border-right: 1px solid black;
-}
-
-/* Content Table Adjustments */
-.mid-div {
-    grid-template-rows: 40px auto 40px 40px;
-    border-bottom: 1px solid black;
-}
-
-.content-heads, .content, .total {
-    display: grid;
-    grid-template-columns: 5% 30% 10% 10% 10% 10% 10% 15%;
+.tax-desc,.central-tax,.state-tax,.total-tax,.tax-value{
+   
     text-align: center;
-    border-bottom: 1px solid black;
-    font-size: 10pt; /* Reduce text size */
+ border-right-color: black;
+border-right:solid;
 }
-
-.description, .sl-no, .quantity, .per, .amount, .HSN-SAC, .gst-rate, .rate {
-    border-right: 1px solid black;
+.central-tax,.state-tax{
+    display:grid;
+    grid-template-rows:25px 1fr;
 }
-
-.total-words {
-    border-bottom: 1px solid black;
-}
-
-/* Tax Section */
-.tax-div {
-    grid-template-rows: 50px 25px 25px;
-}
-
-.tax-head, .tax-hsn, .tax-total {
-    display: grid;
-    grid-template-columns: 30% 15% 20% 20% 15%;
+.tax-top{
     text-align: center;
-    border-bottom: 1px solid black;
+    border-bottom-color:black;
+    border-bottom:solid;
 }
-
-.tax-desc, .central-tax, .state-tax, .total-tax, .tax-value {
-    border-right: 1px solid black;
+.tax-bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
 }
-
-/* Bottom Section */
-.bottom-div {
-    margin-top: 10px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+.tax-bottom-element{
+    border-right-color: black;
+    border-right:solid;
 }
-
-.declaration {
-    display: grid;
+.tax-words{
+    border-bottom-color:black;
+    border-bottom:solid;
+    height:30px;
+}
+.bottom-div{
+    margin-top:15px;
+    border-top: solid;
+    border-bottom:solid;
+    border-bottom-color:black;
+    border-top-color:black;
+    display:grid;
+    grid-template-rows:120px 1fr;
+}
+.declaration{
+    display:grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid black;
+    border-bottom:solid;
+    border-bottom-color:black;
 }
-
-.sign-seal {
-    display: grid;
+.dec-right{
+    margin-left:10px;
+    margin-top:20px;
+}
+.sign-seal{
+    height:100px;
+    display:grid;
     grid-template-columns: 1fr 1fr;
-    height: 100px;
 }
-
-.cust-sign {
-    border-right: 1px solid black;
+.cust-sign{
+    border-right-color: black;
+    border-right:solid;
 }
-
-.conclusion {
+.conclusion{
     text-align: center;
-    font-weight: bold;
 }
 
-/* Print Optimization */
-@media print {
-    @page {
-        size: letter;  /* Ensure it prints in letter size */
-        margin: 0.5in; /* Prevent content cutoff */
-    }
-
-    body {
-        font-size: 10pt;  /* Reduce font size for print */
-    }
-
-    .main {
-        width: 7.5in;  /* Ensure it fits within printable area */
-        height: 10in;
-    }
-
-    /* Scale content down to fit page */
-    .main {
-        transform: scale(0.95);
-        transform-origin: top left;
-    }
-
-    /* Page breaks to avoid content splitting */
-    .top-div, .mid-div, .tax-div, .bottom-div {
-        page-break-inside: avoid;
-    }
-
-    /* Reduce space by adjusting margins and paddings */
-    .tax-invoice, .declaration, .sign-seal {
-        margin: 5px 0;
-    }
-
-    .logo {
-        width: 60px;  /* Reduce logo size for print */
-        height: 60px;
-    }
-}
