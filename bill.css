@@ -36,23 +36,28 @@
 .top-right{
     display:grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    border-right: none;
 }
-.one,.two,.three,.four,.five,.six,.seven{
+.one,.two,.three,.four,.five,.six{
     
 border-bottom-color:black;
 border-bottom:solid;
 display:grid;
 grid-template-columns: 1fr 1fr;
 }
-.left,.right{
+.seven{
+    display:grid;
+grid-template-columns: 1fr 1fr;
+}
+.left{
 border-right-color: black;
 border-right:solid;
 }
 
 .mid-div{
     height:310px;
-    border-bottom-color:black;
-    border-bottom:solid;
+    /* border-bottom-color:black;
+    border-bottom:solid; */
     display:grid;
     grid-template-rows: 40px 200px 30px 40px;
 }
@@ -84,7 +89,7 @@ border-right:solid;
     border-bottom:solid;
 
 }
-.description,.sl-no,.quantity,.per,.amount,.HSN-SAC,.gst-rate,.rate{
+.description,.sl-no,.quantity,.per,.HSN-SAC,.gst-rate,.rate{
 border-right-color:black;
 border-right:solid;
 }
@@ -116,7 +121,7 @@ border-right:solid;
     grid-template-columns:230px 80px 140px 140px 110px;
 }
 
-.tax-desc,.central-tax,.state-tax,.total-tax,.tax-value{
+.tax-desc,.central-tax,.state-tax,.tax-value{
    
     text-align: center;
  border-right-color: black;
@@ -135,10 +140,10 @@ border-right:solid;
     display:grid;
     grid-template-columns:1fr 1fr;
 }
-.tax-bottom-element{
+/* .tax-bottom-element{
     border-right-color: black;
     border-right:solid;
-}
+} */
 .tax-words{
     border-bottom-color:black;
     border-bottom:solid;
@@ -147,8 +152,8 @@ border-right:solid;
 .bottom-div{
     margin-top:15px;
     border-top: solid;
-    border-bottom:solid;
-    border-bottom-color:black;
+    /* border-bottom:solid; */
+    /* border-bottom-color:black; */
     border-top-color:black;
     display:grid;
     grid-template-rows:120px 1fr;
@@ -175,5 +180,6 @@ border-right:solid;
 .conclusion{
     text-align: center;
 }
+
 
 
