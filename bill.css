@@ -184,4 +184,8 @@ border-right:solid;
 .dec-left {
     font-size: 90%;
 }
+textarea {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
 
