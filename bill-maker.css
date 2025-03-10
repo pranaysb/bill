@@ -89,3 +89,8 @@ button:hover {
         padding: 12px;
     }
 }
+
+textarea {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
