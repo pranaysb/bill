@@ -35,7 +35,7 @@
     <script>
         function storeData() {
             const billno = document.getElementById('billno').value;
-            const buyer = document.getElementById('buyer').value;
+            const buyer = document.getElementById('buyer').value.replace(/\n/g, "<br>"); // FIXED HERE
             const date = document.getElementById('date').value;
             const vehicle = document.getElementById('vehicle').value;
             const quantity = parseInt(document.getElementById('quantity').value);
