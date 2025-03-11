@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Listings</title>
+    <style>
+        /* Modern styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            padding: 20px;
+            background-color: #2d3748;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .business {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .business:hover {
+            transform: translateY(-10px);
+        }
+
+        .business h2 {
+            color: #2b6cb0;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .business p {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .copy-btn {
+            background-color: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #2c5282;
+        }
+
+        .copy-btn:focus {
+            outline: none;
+        }
+
+        /* Tooltip style */
+        .tooltip {
+            visibility: hidden;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .copy-btn:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Business Listings</h1>
+    <div class="container">
+        <div class="business">
+            <h2>Supreme Constructions</h2>
+            <p>Address: No3, 1 cross, 1 main, 1 stage, West of chord road, rajajinagar, Bangalore 560010</p>
+            <p>GST: 29ABUPB6146P1ZU</p>
+            <button class="copy-btn" onclick="copyToClipboard('Supreme Constructions\nAddress: No3, 1 cross, 1 main, 1 stage, West of chord road, rajajinagar, Bangalore 560010\nGST: 29ABUPB6146P1ZU')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+
+        <div class="business">
+            <h2>Eshwari Enterprises</h2>
+            <p>Address: #1554 G.F 22nd main 39th f cross Jayanagar – Bengaluru – 41</p>
+            <p>GST IN/UIN: 29AAFFE1219A2ZZ</p>
+            <button class="copy-btn" onclick="copyToClipboard('Eshwari Enterprises\nAddress: #1554 G.F 22nd main 39th f cross Jayanagar – Bengaluru – 41\nGST IN/UIN: 29AAFFE1219A2ZZ')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+
+        <div class="business">
+            <h2>Sri Adityan Sagar Constructions</h2>
+            <p>Address: Chamaraj Pet, Bengaluru 560018</p>
+            <p>Shipped to: Kebbe Doddi, Horohalli, Kanakapura, Bengaluru 562112</p>
+            <p>GST IN/UIN: 29APBPR9814B2ZR</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sri Adityan Sagar Constructions\nAddress: Chamaraj Pet, Bengaluru 560018\nShipped to: Kebbe Doddi, Horohalli, Kanakapura, Bengaluru 562112\nGST IN/UIN: 29APBPR9814B2ZR')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Sapthagiri Enterprises</h2>
+            <p>Address: Prakruthi Residency, 25 6th Main, Kathriguppe Main Road, Srinivas Nagar, Bangalore-560085</p>
+            <p>GST IN/UIN: 29ALLPP5226D1ZY</p>
+            <p>State Name: Karnataka Code: 29</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sapthagiri Enterprises\nAddress: Prakruthi Residency, 25 6th Main, Kathriguppe Main Road, Srinivas Nagar, Bangalore-560085\nGST IN/UIN: 29ALLPP5226D1ZY\nState Name: Karnataka Code: 29')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        <div class="business">
+            <h2>Srushti Engineers & Associates</h2>
+            <p>Address: No.6/4, 1st Floor, 10th Cross, HA Farm Post, Bhuvaneshwarinagar, Bangalore-560024</p>
+            <p>GST IN/UIN: 29AHNPM8255F1ZT</p>
+            <p>State Name: Karnataka, Code: 29</p>
+            <button class="copy-btn" onclick="copyToClipboard('Srushti Engineers & Associates\nAddress: No.6/4, 1st Floor, 10th Cross, HA Farm Post, Bhuvaneshwarinagar, Bangalore-560024\nGST IN/UIN: 29AHNPM8255F1ZT\nState Name: Karnataka, Code: 29')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Heartwave Constructions</h2>
+            <p>Address: #212, 37th A Cross Road, Jayanagar 9th Block 560069</p>
+            <p>GST IN/UIN: 29CNOPP</p>
+            <button class="copy-btn" onclick="copyToClipboard('Heartwave Constructions\nAddress: #212, 37th A Cross Road, Jayanagar 9th Block 560069\nGST IN/UIN: 29CNOPP')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Southern Constructions</h2>
+            <p>Address: No 949 9th Block, 28th Main Road, Jayanagar, Bengaluru-560069</p>
+            <p>GST IN/UIN: 29AGOPK7456E1ZV</p>
+            <button class="copy-btn" onclick="copyToClipboard('Southern Constructions\nAddress: No 949 9th Block, 28th Main Road, Jayanagar, Bengaluru-560069\nGST IN/UIN: 29AGOPK7456E1ZV')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Thirumala Traders</h2>
+            <p>Address: #250, 7th A Cross, BSK 3rd Stage, Bangalore-560085</p>
+            <p>GST IN/UIN: 29GCIPS9664C1ZV</p>
+            <button class="copy-btn" onclick="copyToClipboard('Thirumala Traders\nAddress: #250, 7th A Cross, BSK 3rd Stage, Bangalore-560085\nGST IN/UIN: 29GCIPS9664C1ZV')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>M M Enterprises</h2>
+            <p>Address: Banashankari, BENGALURU</p>
+            <p>GST IN/UIN: 29AYPPP1626C1ZA</p>
+            <button class="copy-btn" onclick="copyToClipboard('M M Enterprises\nAddress: Banashankari, BENGALURU\nGST IN/UIN: 29AYPPP1626C1ZA')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        <div class="business">
+            <h2>Abhya Enterprises</h2>
+            <p>Address: 402, SSVD Forest View Apartment, 2nd Cross, Silver Oak Street, Opposite Bridge Palm Spring, 7th Phase, JP Nagar, Bangalore 560078</p>
+            <p>GST No: 29AHRPV0784A1ZW</p>
+            <button class="copy-btn" onclick="copyToClipboard('Abhya Enterprises\nAddress: 402, SSVD Forest View Apartment, 2nd Cross, Silver Oak Street, Opposite Bridge Palm Spring, 7th Phase, JP Nagar, Bangalore 560078\nGST No: 29AHRPV0784A1ZW')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>SRI BALAJI ENTERPRISES</h2>
+            <p>Address: Name of Bank- AXISBANK</p>
+            <p>C/A No. 920020056606334</p>
+            <p>IFSCODE: UTIB0003190</p>
+            <p>Kathriguppe Branch</p>
+            <button class="copy-btn" onclick="copyToClipboard('SRI BALAJI ENTERPRISES\nAddress: Name of Bank- AXISBANK\nC/A No. 920020056606334\nIFSCODE: UTIB0003190\nKathriguppe Branch')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Sri Anjaneya Contractors</h2>
+            <p>Address: #10. 3/2 4th ‘B’ Cross, Kathriguppe, BSK 3rd Stage, Bangalore-560085</p>
+            <p>GST: 29GDTPK2497F1ZR</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sri Anjaneya Contractors\nAddress: #10. 3/2 4th ‘B’ Cross, Kathriguppe, BSK 3rd Stage, Bangalore-560085\nGST: 29GDTPK2497F1ZR')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>M/s. Kritin Constructions</h2>
+            <p>Address: No 43, 8th A Cross Bhuvaneshwari, BSK 3rd Stage Bengaluru 560085</p>
+            <p>GST No: 29ADBPN9800F1ZJ</p>
+            <button class="copy-btn" onclick="copyToClipboard('M/s. Kritin Constructions\nAddress: No 43, 8th A Cross Bhuvaneshwari, BSK 3rd Stage Bengaluru 560085\nGST No: 29ADBPN9800F1ZJ')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>SRI Venkateshwara Constructions</h2>
+            <p>Address: 222 5th Main, Rajaji Nagar, Bengaluru-44</p>
+            <p>GSTIN: 29BECPS5625C1ZH</p>
+            <button class="copy-btn" onclick="copyToClipboard('SRI Venkateshwara Constructions\nAddress: 222 5th Main, Rajaji Nagar, Bengaluru-44\nGSTIN: 29BECPS5625C1ZH')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>VS Constructions</h2>
+            <p>Address: Banashankari Bengaluru</p>
+            <p>GST IN/UIP: 29ACGPM4699D1Z6</p>
+            <button class="copy-btn" onclick="copyToClipboard('VS Constructions\nAddress: Banashankari Bengaluru\nGST IN/UIP: 29ACGPM4699D1Z6')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>NANDI DEVELOPERS</h2>
+            <p>Address: Uttaralli Bengaluru</p>
+            <p>GST: 29AAKFN8632P1ZC</p>
+            <button class="copy-btn" onclick="copyToClipboard('NANDI DEVELOPERS\nAddress: Uttaralli Bengaluru\nGST: 29AAKFN8632P1ZC')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Veda Developers</h2>
+            <p>Address: Uttarahalli Main Road, Bengaluru – 560061</p>
+            <p>GST IN/UIP: 29BDEPS8230E1ZE</p>
+            <button class="copy-btn" onclick="copyToClipboard('Veda Developers\nAddress: Uttarahalli Main Road, Bengaluru – 560061\nGST IN/UIP: 29BDEPS8230E1ZE')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Subramanya Constructions</h2>
+            <p>Address: Bangalore</p>
+            <p>GST IN/UIP: 29FPPPS5624F1Z8</p>
+            <button class="copy-btn" onclick="copyToClipboard('Subramanya Constructions\nAddress: Bangalore\nGST IN/UIP: 29FPPPS5624F1Z8')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>N. Venkatapathy</h2>
+            <p>Address: 88, 2nd Main Road, Ranganatha Colony, JJR Nagar, Bangalore-18</p>
+            <p>GST IN/UIP: 29ADRPV7157K1ZE</p>
+            <button class="copy-btn" onclick="copyToClipboard('N. Venkatapathy\nAddress: 88, 2nd Main Road, Ranganatha Colony, JJR Nagar, Bangalore-18\nGST IN/UIP: 29ADRPV7157K1ZE')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        <div class="business">
+            <h2>Sri Anjaneya Contractors</h2>
+            <p>Address: #10. 3/2 4th ‘B’ Cross, Kathriguppe, BSK 3rd Stage, Bangalore-560085</p>
+            <p>GST: 29GDTPK2497F1ZR</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sri Anjaneya Contractors\nAddress: #10. 3/2 4th ‘B’ Cross, Kathriguppe, BSK 3rd Stage, Bangalore-560085\nGST: 29GDTPK2497F1ZR')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Subramanya Constructions</h2>
+            <p>Address: Bangalore</p>
+            <p>GST IN/UIP: 29FPPPS5624F1Z8</p>
+            <button class="copy-btn" onclick="copyToClipboard('Subramanya Constructions\nAddress: Bangalore\nGST IN/UIP: 29FPPPS5624F1Z8')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Star Constructions</h2>
+            <p>Address: Ground Floor No. 3/2, 100 Feet Ring Road, BTM 1st Stage, Bengaluru Urban, Karnataka, 560029</p>
+            <button class="copy-btn" onclick="copyToClipboard('Star Constructions\nAddress: Ground Floor No. 3/2, 100 Feet Ring Road, BTM 1st Stage, Bengaluru Urban, Karnataka, 560029')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Veda Developers</h2>
+            <p>Address: Uttarahalli Main Road, Bengaluru – 560061</p>
+            <p>GST IN/UIP: 29BDEPS8230E1ZE</p>
+            <button class="copy-btn" onclick="copyToClipboard('Veda Developers\nAddress: Uttarahalli Main Road, Bengaluru – 560061\nGST IN/UIP: 29BDEPS8230E1ZE')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Nandini</h2>
+            <p>Address: No 995/A2, 4th Cross, Ashok Nagar, BSK 1st Stage, Bangalore - 560 050</p>
+            <button class="copy-btn" onclick="copyToClipboard('Nandini\nAddress: No 995/A2, 4th Cross, Ashok Nagar, BSK 1st Stage, Bangalore - 560 050')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Archan Traders</h2>
+            <p>Address: No 11 3rd Cross Brundhavan Nagar Dasanapura, Bangalore 73</p>
+            <p>GST: 29BTMPA6061R2ZY</p>
+            <button class="copy-btn" onclick="copyToClipboard('Archan Traders\nAddress: No 11 3rd Cross Brundhavan Nagar Dasanapura, Bangalore 73\nGST: 29BTMPA6061R2ZY')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Vinuta Naveen Kumar</h2>
+            <p>Address: No. 1213, 5th Main, 4th Stage, 2nd Block BTM Layout, near RTO Office, Devarachikkana Halli, Bengaluru, Karnataka -560076</p>
+            <button class="copy-btn" onclick="copyToClipboard('Vinuta Naveen Kumar\nAddress: No. 1213, 5th Main, 4th Stage, 2nd Block BTM Layout, near RTO Office, Devarachikkana Halli, Bengaluru, Karnataka -560076')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>V S Shivakumar</h2>
+            <p>Address: #26 4th Main Road, Srinivasangar, BSK 3rd Stage Bangalore-85</p>
+            <button class="copy-btn" onclick="copyToClipboard('V S Shivakumar\nAddress: #26 4th Main Road, Srinivasangar, BSK 3rd Stage Bangalore-85')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Nathmal Pannalal and Others</h2>
+            <p>Address: Banashankari 2nd Stage, Bangalore</p>
+            <button class="copy-btn" onclick="copyToClipboard('Nathmal Pannalal and Others\nAddress: Banashankari 2nd Stage, Bangalore')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>M M Enterprises</h2>
+            <p>Address: Banashankari, BENGALURU</p>
+            <p>GST IN/UIP: 29AYPPP1626C1ZA</p>
+            <button class="copy-btn" onclick="copyToClipboard('M M Enterprises\nAddress: Banashankari, BENGALURU\nGST IN/UIP: 29AYPPP1626C1ZA')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Anil Kumar Maurya</h2>
+            <p>Address: #255 14th Main, 22nd Cross, HSR Layout, Bangalore 560102</p>
+            <button class="copy-btn" onclick="copyToClipboard('Anil Kumar Maurya\nAddress: #255 14th Main, 22nd Cross, HSR Layout, Bangalore 560102')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        <div class="business">
+            <h2>Sri Aadityan Sagar Construction</h2>
+            <p>Address: Kebbedoddi Village, Harohalli, Bangalore-562112</p>
+            <p>GSTIN no: 29APBPR9814B2ZR</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sri Aadityan Sagar Construction\nAddress: Kebbedoddi Village, Harohalli, Bangalore-562112\nGSTIN no: 29APBPR9814B2ZR')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Nandini</h2>
+            <p>Address: No 995/A2, 4th Cross, Ashok Nagar, BSK 1st Stage, Bangalore - 560050</p>
+            <button class="copy-btn" onclick="copyToClipboard('Nandini\nAddress: No 995/A2, 4th Cross, Ashok Nagar, BSK 1st Stage, Bangalore - 560050')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Single Pencil Architects and Interior Designers</h2>
+            <p>Address: Bengaluru</p>
+            <p>GST IN/UIP: 29AVQPG6410R1ZT</p>
+            <button class="copy-btn" onclick="copyToClipboard('Single Pencil Architects and Interior Designers\nAddress: Bengaluru\nGST IN/UIP: 29AVQPG6410R1ZT')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>PRAGNA CIVIL SOLUTIONS</h2>
+            <p>Address: Bangalore</p>
+            <p>GST: 29BHNPC6675G1ZW</p>
+            <button class="copy-btn" onclick="copyToClipboard('PRAGNA CIVIL SOLUTIONS\nAddress: Bangalore\nGST: 29BHNPC6675G1ZW')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Sri Manjunatha Enterprises</h2>
+            <p>Address: NO.99/1 Near Central Bank of India, Kathriguppa Main Road, BSK 3rd Stage, Bengaluru-560085</p>
+            <p>GST IN/UIP: 29AWJPM5012H1ZH</p>
+            <button class="copy-btn" onclick="copyToClipboard('Sri Manjunatha Enterprises\nAddress: NO.99/1 Near Central Bank of India, Kathriguppa Main Road, BSK 3rd Stage, Bengaluru-560085\nGST IN/UIP: 29AWJPM5012H1ZH')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>S S Constructions</h2>
+            <p>Address: Boeing L&W</p>
+            <p>GSTIN/UIP: 29AETPN8641P2Z8</p>
+            <button class="copy-btn" onclick="copyToClipboard('S S Constructions\nAddress: Boeing L&W\nGSTIN/UIP: 29AETPN8641P2Z8')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Beereshwara Steel & Cements</h2>
+            <p>Address: No.13-14 Dr.Vishnuvardhan Road, Channasandra, Rajarajeshwarinagar, Bengaluru-560098</p>
+            <p>GSTIN: 29ALOPM9861A1ZN</p>
+            <button class="copy-btn" onclick="copyToClipboard('Beereshwara Steel & Cements\nAddress: No.13-14 Dr.Vishnuvardhan Road, Channasandra, Rajarajeshwarinagar, Bengaluru-560098\nGSTIN: 29ALOPM9861A1ZN')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Stone Edge Construction</h2>
+            <p>Address: No.47/11, Mango Garden, Konanakunte Cross, Kanakapura Main Road, Bangalore-560062</p>
+            <p>GSTIN/UIN: 29ADKFS8813L1ZA</p>
+            <button class="copy-btn" onclick="copyToClipboard('Stone Edge Construction\nAddress: No.47/11, Mango Garden, Konanakunte Cross, Kanakapura Main Road, Bangalore-560062\nGSTIN/UIN: 29ADKFS8813L1ZA')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Aishwarya Infrastructure & Developers</h2>
+            <p>Address: No 1 Kumara Krupa Road, Bangalore-560001</p>
+            <p>GSTIN/UIN: 29ACHPC6860H1ZG</p>
+            <button class="copy-btn" onclick="copyToClipboard('Aishwarya Infrastructure & Developers\nAddress: No 1 Kumara Krupa Road, Bangalore-560001\nGSTIN/UIN: 29ACHPC6860H1ZG')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Shreyas Constructions</h2>
+            <p>Address: #39/40 Skanda Nagar, Hoodibadavane Bengaluru 560092</p>
+            <p>GSTIN: 29CQNPG5780J1Z5</p>
+            <p>Delivered at: Mahadevapura Site</p>
+            <button class="copy-btn" onclick="copyToClipboard('Shreyas Constructions\nAddress: #39/40 Skanda Nagar, Hoodibadavane Bengaluru 560092\nGSTIN: 29CQNPG5780J1Z5\nDelivered at: Mahadevapura Site')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Genesis Architects</h2>
+            <p>Address: #6A, 1st Cross, Uday Nagar, Chikkalasandra Hobli, Bangalore 560061</p>
+            <p>GSTIN: 29BCPPS6053R2ZC</p>
+            <button class="copy-btn" onclick="copyToClipboard('Genesis Architects\nAddress: #6A, 1st Cross, Uday Nagar, Chikkalasandra Hobli, Bangalore 560061\nGSTIN: 29BCPPS6053R2ZC')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Vaibhav Pandhari</h2>
+            <p>Address: 107 3rd Main, East Kathriguppe, BSK 3rd Stage, Bengaluru 560085</p>
+            <button class="copy-btn" onclick="copyToClipboard('Vaibhav Pandhari\nAddress: 107 3rd Main, East Kathriguppe, BSK 3rd Stage, Bengaluru 560085')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>Kalavara Enterprises Pvt Ltd</h2>
+            <p>Address: No 8 7th Cross 1st Main, Nagadevanahalli, Bengaluru 560056</p>
+            <p>GSTIN: 29AAHCK7040G1ZF</p>
+            <button class="copy-btn" onclick="copyToClipboard('Kalavara Enterprises Pvt Ltd\nAddress: No 8 7th Cross 1st Main, Nagadevanahalli, Bengaluru 560056\nGSTIN: 29AAHCK7040G1ZF')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        
+        <div class="business">
+            <h2>G Jayaram</h2>
+            <p>Address: #131 8th Main 4th Stage, 4th Block, Basaveswara Nagar, Bengaluru -560079</p>
+            <p>GSTIN/UIP: 29</p>
+            <button class="copy-btn" onclick="copyToClipboard('G Jayaram\nAddress: #131 8th Main 4th Stage, 4th Block, Basaveswara Nagar, Bengaluru -560079\nGSTIN/UIP: 29')">Copy to Clipboard
+                <span class="tooltip">Copied!</span>
+            </button>
+        </div>
+        <div class="business">
+            <h2>Axita Infrastructure Pvt ltd</h2>
+            <p>Address: #8 & 8/15th cross, 2nd main, Venkateshwara layout, Bangalore</p>
+            <p>Delivery at: 2nd cross, near Hulimavu Police station, Bannergatta road, Hulimavu, Bengaluru-560076</p>
+            <p>GST no: 29AAVCA0297M1ZT</p>
+        </div>
+        
+        <div class="business">
+            <h2>Life Stone infra</h2>
+            <p>Address: #60/4 Satrit Villa, KSRTC Layout Chikkalasandra, Bengaluru 560061</p>
+            <p>GSTin: 29DPEPS9474E1Z7</p>
+            <p>Delivered at: Kanakapura road</p>
+        </div>
+        
+        <div class="business">
+            <h2>Gunjur Bldcon LLP</h2>
+            <p>Address: NO 223 15th Main 24th cross Banashankari 2nd stage, Bengaluru 560070</p>
+            <p>GSTIN: 29AAZFG7601A1Z8</p>
+        </div>
+        
+        <div class="business">
+            <h2>Venkateswara agency</h2>
+            <p>Address: Girinagar BSK 3rd Stage, Bengaluru 560085</p>
+            <p>GSTIN: 29DTVPS4385F1ZO</p>
+        </div>
+        
+        <div class="business">
+            <h2>D K Constructions</h2>
+            <p>Address: 1st Floor N32 /1309 4th cross Girinagar, Bengaluru 560085</p>
+            <p>GST no: 29AQRP9176F1ZB</p>
+            <p>Delivery: Devenahalli</p>
+        </div>
+        
+        <div class="business">
+            <h2>Vaastu Properties</h2>
+            <p>Address: Sy.no. 81/2, Vaastu Tranquil, basement 1, Uttarahalli main road, Kengeri, Bangalore 560060</p>
+            <p>GST: 29AAIFV9286H1ZB</p>
+        </div>
+        
+        <div class="business">
+            <h2>Ramamurthy L</h2>
+            <p>Address: 65/4, 1st Main Kaveripura, Mahadeshwara temple, Kamakshipalya, Karnataka, 560079</p>
+            <p>GSTIN NO: 29AUKPR8047C1Z8</p>
+        </div>
+        
+        <div class="business">
+            <h2>Mahesh Engineering Works</h2>
+            <p>Address: Uttralli, Anjanapura Post, Bangalore Urban, Karnataka, 560108</p>
+            <p>GSTIN: 29BQKPM8453N2ZU</p>
+        </div>
+        
+        <div class="business">
+            <h2>Boregowda H B</h2>
+            <p>Address: #379/1 1st main Jaga jyothi Layout, Nagadevana halli Bengaluru</p>
+            <p>GSTIN NO: 29ADTPB1151B1ZX</p>
+        </div>
+        
+        <div class="business">
+            <h2>Venkateswara agency</h2>
+            <p>Address: Girinagar BSK 3rd stage, Bengaluru 560085</p>
+            <p>GSTIN: 29DTVPS4385F1ZO</p>
+        </div>
+        
+        <div class="business">
+            <h2>Suresh (PWD Civil Contractor)</h2>
+            <p>Address: NO 14/3, 4th Main, Kanaka purura main road, Yelachenanahalli</p>
+            <p>Delivered at: Jayanagar</p>
+            <p>GSTIN: 29CRSPS5936A1Z7</p>
+        </div>
+        
+        <div class="business">
+            <h2>Anil Kumar Maurya</h2>
+            <p>Address: #255 14th Main 22nd Cross, HSR Layout, Sector 6, Bangalore 560102</p>
+        </div>
+        
+        <div class="business">
+            <h2>M/S Balaji Constructions</h2>
+            <p>Address: 2nd Floor #31, 3rd main Jayanagar East, Bangalore 560011</p>
+            <p>Delivered at: No 58 Kanakapura main road, Basavanagudi 560004</p>
+            <p>GSTIN: 29AEXPM1500N1ZY</p>
+        </div>
+        
+        <div class="business">
+            <h2>ASI India</h2>
+            <p>Address: 119B Cross 7th main Rajeev nagar BSK 3rd stage, Bangalore 560085</p>
+            <p>Site address: No 70/4 Nelaguli village, Bangalore 560082</p>
+            <p>GSTIN: ANEPD6957A1Z3</p>
+        </div>
+        
+        <div class="business">
+            <h2>K Udayakumar</h2>
+            <p>Address: No. 361 opp Real Home Apartments, Anjanapura, Bangalore 560062</p>
+            <p>GSTIN: 29AASPU0271H2Z5</p>
+        </div>
+        
+        <div class="business">
+            <h2>Modeinfra Tech LLP</h2>
+            <p>Address: #1105, Archana Arcade, 2nd Floor, 24th Main, 1st Phase, J.P. Nagar, Bangalore-560078</p>
+            <p>GSTIN: 29ABNFM8353J1ZI</p>
+        </div>
+        
+        <div class="business">
+            <h2>S R Construction</h2>
+            <p>Address: #2964, 13th B Main road, R P C Layout Bangalore 560040</p>
+            <p>GSTIN: 29GYEPS5145G1ZY</p>
+        </div>
+        
+        <div class="business">
+            <h2>Brundavana Constructions</h2>
+            <p>Address: #119/12, 6th cross Balaji nagar, Bengaluru 560061</p>
+            <p>GSTIN: 29AAUFB4498B1ZZ</p>
+        </div>
+        
+        <div class="business">
+            <h2>Chethan Works</h2>
+            <p>Address: No. 36, Raghuram Reddy Layout, Kudlu, Bangalore 560068</p>
+            <p>GSTIN: 29AXSPC6283E1Z3</p>
+            <p>Delivered at: Vittasandra Jubileehill layout</p>
+        </div>
+        
+        <div class="business">
+            <h2>Sowmyashree Engineering Works</h2>
+            <p>Address: No 118, 1st main road, Gajendra nagar, Mysore road, Bangalore 560026</p>
+            <p>GSTIN: 29BQLPS2022N3Z9</p>
+        </div>
+        
+        <div class="business">
+            <h2>Prabhu NK</h2>
+            <p>Address: #401 'SKANDA ENCLAVE', No. 10, Santrupthi Nagar, 6th Main, 7th Phase, J P Nagar, Bangalore - 560078</p>
+        </div>
+        
+        <div class="business">
+            <h2>Sagu Lalitha Devi</h2>
+            <p>Address: Neeladri Nagar, Saibaba temple road, Bangalore 56010</p>
+            <p>GSTIN: 29PANN0BUBPS5219M</p>
+        </div>
+        
+        <div class="business">
+            <h2>L K Enterprises</h2>
+            <p>Address: #74, 60 feet road, D Group layout Srigandada Kaval, Nagarabhavi, Bangalore 560091</p>
+            <p>GSTIN/UIN: 29AOIPL3262ICT9281B1Z0R1Z6</p>
+        </div>
+        
+        <div class="business">
+            <h2>NIRVIKALPA</h2>
+            <p>Address: No. 19, Ramakrishnappa Main Road, Vittal Manor Apartment, Cox Town, Bengaluru-560005</p>
+            <p>GSTIN: 29AAWFN5074F1ZN</p>
+        </div>
+        
+        <div class="business">
+            <h2>N.G. Ganesh Babu Engineering Contractor</h2>
+            <p>Address: 1346 32nd E cross Jayanagar 4th block, Bengaluru-560041</p>
+            <p>GSTIN: 29ACUPB0739K1Z7</p>
+            <p>Delivery at: BTM Layout constituency</p>
+        </div>
+        
+        <div class="business">
+            <h2>Shivakumar Constructions and Asphalts</h2>
+            <p>GSTIN: 29HHEPS5074N1ZD</p>
+        </div>
+        
+        <div class="business">
+            <h2>Girish M Iyer Civil Contractor</h2>
+            <p>Address: No 2512, LIG B Sector, 3rd phase, Yelahanka New town, Bengaluru Urban-560064</p>
+            <p>GSTIN: 29ABLPJ3415G1ZO</p>
+            <p>Delivery address: Kallubalu Gram Panchayat, Jigani Hobali, Anekal Taluku, Bengaluru-560105</p>
+        </div>
+        
+        <div class="business">
+            <h2>JP ENTERPRISES</h2>
+            <p>Address: Flat No. 501, Akshaya Arcade, 4th Main, 1st Cross, PP Layout, Vishnuvardhan Circle, Vaddarapalya, Uttarahalli, Bengaluru</p>
+            <p>GSTIN: 29BBEPJ2670K2ZD</p>
+        </div>
+        
+        <div class="business">
+            <h2>RMKGROUPS</h2>
+            <p>Address: #13, Sharantara, Rushya Shrunga Road, Old Bank Colony, Konanakunte, Bengaluru - 560 062</p>
+            <p>GSTIN: 29CWXPM4465Q1Z3</p>
+        </div>
+        <!-- Repeat for other businesses -->
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            // Create a temporary text area element
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+
+            // Remove the text area element
+            document.body.removeChild(textArea);
+
+            // Show tooltip
+            const tooltip = event.target.querySelector('.tooltip');
+            tooltip.style.visibility = 'visible';
+            tooltip.style.opacity = '1';
+
+            // Hide tooltip after 2 seconds
+            setTimeout(() => {
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
