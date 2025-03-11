@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Redeploying site -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +41,7 @@
                             <!-- make 7 divs and two more in each of them -->
                             <div class="one">
                                 <div class="left">
-                                    Invoice No: <br>
+                                    Invoice No:371 <br>
                                     <span id="billno"></span>
 
                                 </div>
@@ -336,8 +335,6 @@ Amount Chargeable in words: <span id="totalAmountWords"></span>
 paid within the said time form the dateofinvoice <br>
 2. Goods once sold will not be taken backorexchanged. 
 our responsibility ceases soon afterthegoods
-<br><br>
-<br>
         </div>
         <div class="dec-right">
                 Company’s Bank Details<br>
@@ -367,12 +364,17 @@ our responsibility ceases soon afterthegoods
 </div>
 
     </div>
+<br>
+<br><br><br>
+    <button id="download-pdf" style="margin: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Download Bill as PDF
+    </button>
     <script>
         window.onload = function() {
             const billno = localStorage.getItem('billno'); 
             document.getElementById('billno').textContent = billno;
             const buyer = localStorage.getItem('buyer'); 
-                document.getElementById('buyer').textContent = buyer;
+            document.getElementById('buyer').innerHTML = buyer;
                 const date = localStorage.getItem('date');
                 document.getElementById('date').textContent = date;
                 const vehicle = localStorage.getItem('vehicle');
@@ -480,6 +482,39 @@ our responsibility ceases soon afterthegoods
                  }
 
 
+    </script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+      document.getElementById('download-pdf').addEventListener('click', function () {
+          // Select the specific section you want to export (e.g., the bill area)
+          const element = document.querySelector('body');  // Change to '#bill-section' if you want to select specific content
+    
+          html2pdf()
+            .set({
+                margin: [10, 10, 10, 10],  // Top, right, bottom, left margins
+                filename: 'Bill_Invoice.pdf',
+                image: { type: 'jpeg', quality: 1.0 },  // High image quality
+                html2canvas: { 
+                    scale: 3,  // Increases resolution to avoid distortion
+                    useCORS: true,  // Ensures cross-origin images are loaded correctly
+                    logging: true,  // Helps debug rendering issues
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait'  // Can be 'portrait' or 'landscape'
+                }
+            })
+            .from(element)
+            .toPdf()
+            .get('pdf')
+            .then(function (pdf) {
+                pdf.internal.scaleFactor = 1.5;  // Improve clarity and readability
+            })
+            .save();
+      });
     </script>
 </body>
 
