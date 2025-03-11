@@ -41,7 +41,7 @@
         function storeData() {
             const billno = document.getElementById('billno').value;
             const buyer = document.getElementById('buyer').value.replace(/\n/g, "<br>"); // FIXED HERE
-            const date = document.getElementById('date').value;
+            const date = formatDate(document.getElementById('date').value); // Format the date
             const vehicle = document.getElementById('vehicle').value;
             const quantity = parseInt(document.getElementById('quantity').value);
             const amount = parseFloat(document.getElementById('amount').value);
@@ -71,6 +71,12 @@
             localStorage.setItem('taxAmount', taxAmount.toFixed(2));
 
             window.location.href = 'bill.html';
+        }
+
+        // Function to convert the date from yyyy-mm-dd to dd-mm-yyyy
+        function formatDate(inputDate) {
+            const dateParts = inputDate.split('-');
+            return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
         }
     </script>
 </body>
