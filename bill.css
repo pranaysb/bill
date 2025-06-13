@@ -1,6 +1,13 @@
+
+
 .tax-invoice{
     margin-left:30px;
 }
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
 .main{
     height:980px;
     width: 700px;
