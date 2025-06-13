@@ -366,9 +366,18 @@ our responsibility ceases soon afterthegoods
 
     </div>
 </div>
-<div class="no-print" style="text-align:center; margin-top: 20px;">
-    <button onclick="downloadPDF()">Download PDF</button>
-  </div>
+<div class="no-print" style="text-align:center; margin: 20px;">
+  <button id="download-btn" onclick="downloadPDF()" style="
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 90%;
+    max-width: 300px;
+    margin: auto;
+    display: block;
+  ">
+    Download PDF
+  </button>
+</div>
     <script>
         window.onload = function() {
             const billno = localStorage.getItem('billno'); 
