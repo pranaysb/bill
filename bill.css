@@ -8,6 +8,12 @@
       display: none !important;
     }
   }
+.no-print {
+  position: sticky;
+  bottom: 10px;
+  background: white;
+  z-index: 1000;
+}
 .main{
     height:980px;
     width: 700px;
