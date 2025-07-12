@@ -127,10 +127,17 @@
         }
 
         input,
-        select {
+        select,
+        textarea {
             padding: 5px;
             border: 1px solid #ccc;
             flex-grow: 1;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
         }
 
         button {
@@ -146,6 +153,12 @@
             margin-top: 20px;
             border-top: 1px solid #ccc;
             padding-top: 15px;
+        }
+
+        #buyer-address {
+            white-space: pre-line;
+            display: inline-block;
+            vertical-align: top;
         }
 
         @media print {
@@ -191,8 +204,10 @@
         <div class="border-box">
             <div class="buyer-info">
                 <strong>Buyer:</strong> <span id="buyer-name">Mane constructions</span><br>
-                <span id="buyer-address">#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore
-                    560061</span><br>
+                <span id="buyer-address">#48 1st floor, 3rd main
+                    6th cross, Sarvaboumanagar
+                    Chikkalasandra
+                    Bangalore 560061</span><br>
                 GSTIN: <span id="buyer-gst">29AGNPC6762A1ZF</span>
             </div>
             <table class="invoice-table">
@@ -329,10 +344,12 @@
             <label>Buyer Name:</label>
             <input type="text" id="input-buyer-name" value="Mane constructions">
         </div>
-        <div class="form-group">
-            <label>Buyer Address:</label>
-            <input type="text" id="input-buyer-address"
-                value="#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore 560061">
+        <div class="form-group" style="align-items: flex-start;">
+            <label style="margin-top: 5px;">Buyer Address:</label>
+            <textarea id="input-buyer-address">#48 1st floor, 3rd main
+6th cross, Sarvaboumanagar
+Chikkalasandra
+Bangalore 560061</textarea>
         </div>
         <div class="form-group">
             <label>Vehicle No:</label>
@@ -365,9 +382,9 @@
                 <label>Company Name:</label>
                 <input type="text" id="new-name">
             </div>
-            <div class="form-group">
-                <label>Address:</label>
-                <input type="text" id="new-address">
+            <div class="form-group" style="align-items: flex-start;">
+                <label style="margin-top: 5px;">Address:</label>
+                <textarea id="new-address" rows="3"></textarea>
             </div>
             <button onclick="addToAddressBook()">Add to Address Book</button>
             <div id="address-book-list" style="margin-top: 15px;"></div>
@@ -379,11 +396,11 @@
         let addressBook = {
             "29AGNPC6762A1ZF": {
                 name: "Mane constructions",
-                address: "#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore 560061"
+                address: "#48 1st floor, 3rd main\n6th cross, Sarvaboumanagar\nChikkalasandra\nBangalore 560061"
             },
             "29BAIPS9033A1ZL": {
                 name: "SRI BALAJI ENTERPRISES",
-                address: "#10/60, 3rd cross, 3rd main, Srinivasnagar, BSK 3rd stage, Bangalore-560085, Karnataka"
+                address: "#10/60, 3rd cross, 3rd main\nSrinivasnagar, BSK 3rd stage\nBangalore-560085, Karnataka"
             }
         };
 
@@ -443,7 +460,7 @@
                 html += `<tr>
                     <td>${gstin}</td>
                     <td>${addressBook[gstin].name}</td>
-                    <td>${addressBook[gstin].address}</td>
+                    <td style="white-space: pre-line;">${addressBook[gstin].address}</td>
                 </tr>`;
             }
 
@@ -484,7 +501,7 @@
             document.getElementById('inv-date').textContent = formattedDate;
             document.getElementById('eway-no').textContent = ewayNo;
             document.getElementById('buyer-name').textContent = buyerName;
-            document.getElementById('buyer-address').textContent = buyerAddress;
+            document.getElementById('buyer-address').innerHTML = buyerAddress.replace(/\n/g, '<br>');
             document.getElementById('buyer-gst').textContent = buyerGST;
             document.getElementById('vehicle-no').textContent = vehicleNo;
             document.getElementById('destination').textContent = destination;
