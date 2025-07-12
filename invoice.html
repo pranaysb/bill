@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Tax Invoice</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10mm;
+            font-size: 12px;
+        }
+
+        .invoice-container {
+            width: 190mm;
+            min-height: 277mm;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 5mm;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .border-box {
+            border: 1px solid #000;
+            padding: 3px;
+            margin-bottom: 8px;
+        }
+
+        .double-border-box {
+            border: 2px solid #000;
+            padding: 3px;
+            margin: 8px 0;
+        }
+
+        .invoice-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .seller-info {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .seller-logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+        }
+
+        .seller-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .seller-details {
+            flex-grow: 1;
+        }
+
+        .buyer-info {
+            margin: 8px 0;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+
+        .invoice-table,
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #000;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .declaration {
+            margin-top: 15px;
+            font-size: 11px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #ccc;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            display: inline-block;
+            width: 150px;
+        }
+
+        input,
+        select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            flex-grow: 1;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .address-book {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+
+        @media print {
+            .form-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Invoice Display -->
+    <div class="invoice-container" id="invoice">
+        <div class="double-border-box">
+            <div class="invoice-header">TAX INVOICE</div>
+        </div>
+
+        <!-- Seller Info with Logo -->
+        <div class="border-box">
+            <div class="seller-info">
+                <div class="seller-logo">
+                    <img src="image.png" alt="Sri Balaji Enterprises Logo">
+                </div>
+                <div class="seller-details">
+                    <strong>SRI BALAJI ENTERPRISES</strong><br>
+                    #10/60, 3rd cross, 3rd main,<br>
+                    Srinivasnagar, BSK 3rd stage,<br>
+                    Bangalore-560085, Karnataka<br>
+                    GSTIN: 29BAIPS9033A1ZL<br>
+                    Mobile: 9483949650 | Email: seelambalaji1969@gmail.com
+                </div>
+                <div>
+                    Invoice No: <span id="inv-no">SBE 061/2025-26</span><br>
+                    Dated: <span id="inv-date">31-05-2025</span><br>
+                    E-way No: <span id="eway-no"></span><br>
+                    Supplier's Ref: <span id="supplier-ref"></span><br>
+                    Buyer's Order: <span id="buyer-order"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buyer Info -->
+        <div class="border-box">
+            <div class="buyer-info">
+                <strong>Buyer:</strong> <span id="buyer-name">Mane constructions</span><br>
+                <span id="buyer-address">#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore
+                    560061</span><br>
+                GSTIN: <span id="buyer-gst">29AGNPC6762A1ZF</span>
+            </div>
+            <table class="invoice-table">
+                <tr>
+                    <td>Despatched through: ROAD</td>
+                    <td>Delivery Note:</td>
+                    <td>Delivery Note Date:</td>
+                </tr>
+                <tr>
+                    <td>Bill of Landing/LR-RR:</td>
+                    <td>Destination: <span id="destination">RR nagar</span></td>
+                    <td>Motor Vehicle No: <span id="vehicle-no">KA 01 AD 4645</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Items Table -->
+        <div class="border-box">
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th width="5%">Sl. No</th>
+                        <th width="25%">Description of goods</th>
+                        <th width="10%">HSN/SAC</th>
+                        <th width="10%">GST RATE</th>
+                        <th width="10%">Quantity</th>
+                        <th width="10%">Rate</th>
+                        <th width="5%">per</th>
+                        <th width="15%">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Cement<br>Cgst@14%<br>Sgst@14%</td>
+                        <td>2523</td>
+                        <td>28%</td>
+                        <td class="text-right">122</td>
+                        <td class="text-right">316.98</td>
+                        <td>Bag</td>
+                        <td class="text-right">38671.88<br>5414.06<br>5414.06</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-right"><strong>Total</strong></td>
+                        <td class="text-right">122</td>
+                        <td colspan="2"></td>
+                        <td class="text-right"><strong>₹ 49500.00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>[Amount chargeable in words] <em id="amount-words">Forty nine thousand five hundred rupees only</em>
+            </div>
+        </div>
+
+        <!-- Tax Breakdown -->
+        <div class="border-box">
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th width="15%">HSN/SAC</th>
+                        <th width="25%">Taxable Value</th>
+                        <th width="15%">Central Tax</th>
+                        <th width="15%">State Tax</th>
+                        <th width="15%">Total Tax Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2523</td>
+                        <td class="text-right">38671.88</td>
+                        <td class="text-right">14%<br>5414.06</td>
+                        <td class="text-right">14%<br>5414.06</td>
+                        <td class="text-right">10828.13</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td class="text-right">38671.88</td>
+                        <td class="text-right">5414.06</td>
+                        <td class="text-right">5414.06</td>
+                        <td class="text-right">10828.13</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>[Tax amount in words] <em id="tax-words">Ten thousand eight hundred twenty eight rupees thirteen paise
+                    only</em></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-box">
+            <div class="declaration">
+                <strong>Declaration:</strong><br>
+                1) 18% Interest will be charged on all invoices not paid within the said time from the date of
+                invoice.<br>
+                2) Goods once sold will not be taken back or exchanged. Our responsibility ceases soon after the
+                goods.<br><br>
+
+                <strong>Company's Bank Details</strong><br>
+                BankName: AXIS BANK<br>
+                A/c No.: 920020056606334<br>
+                Branch & IFS Code: UTIB0003190
+            </div>
+
+            <div class="signature-area">
+                <div>Customer's Seal and Signature</div>
+                <div>For Sri Balaji Enterprises<br>Authorised Signatory</div>
+            </div>
+
+            <div class="text-center">SUBJECT TO BANGALORE JURISDICTION</div>
+            <div class="text-center"><em>This is a Computer Generated Invoice</em></div>
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="form-container">
+        <h2>Invoice Details</h2>
+        <div class="form-group">
+            <label>Invoice Number:</label>
+            <input type="text" id="input-inv-no" value="SBE 061/2025-26">
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            <input type="date" id="input-inv-date" value="2025-05-31">
+        </div>
+        <div class="form-group">
+            <label>E-way No:</label>
+            <input type="text" id="input-eway-no">
+        </div>
+        <div class="form-group">
+            <label>Buyer GSTIN:</label>
+            <input type="text" id="input-buyer-gst" value="29AGNPC6762A1ZF" onchange="fetchAddress()">
+            <button type="button" onclick="fetchAddress()">Fetch Address</button>
+        </div>
+        <div class="form-group">
+            <label>Buyer Name:</label>
+            <input type="text" id="input-buyer-name" value="Mane constructions">
+        </div>
+        <div class="form-group">
+            <label>Buyer Address:</label>
+            <input type="text" id="input-buyer-address"
+                value="#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore 560061">
+        </div>
+        <div class="form-group">
+            <label>Vehicle No:</label>
+            <input type="text" id="input-vehicle-no" value="KA 01 AD 4645">
+        </div>
+        <div class="form-group">
+            <label>Destination:</label>
+            <input type="text" id="input-destination" value="RR nagar">
+        </div>
+        <div class="form-group">
+            <label>Quantity (Bags):</label>
+            <input type="number" id="input-quantity" value="122">
+        </div>
+        <div class="form-group">
+            <label>Rate per Bag:</label>
+            <input type="number" id="input-rate" value="316.98" step="0.01">
+        </div>
+
+        <button onclick="updateInvoice()">Update Invoice</button>
+        <button onclick="window.print()">Print Invoice</button>
+
+        <!-- Address Book Management -->
+        <div class="address-book">
+            <h3>Address Book</h3>
+            <div class="form-group">
+                <label>Add New GSTIN:</label>
+                <input type="text" id="new-gst">
+            </div>
+            <div class="form-group">
+                <label>Company Name:</label>
+                <input type="text" id="new-name">
+            </div>
+            <div class="form-group">
+                <label>Address:</label>
+                <input type="text" id="new-address">
+            </div>
+            <button onclick="addToAddressBook()">Add to Address Book</button>
+            <div id="address-book-list" style="margin-top: 15px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Address Book Database
+        let addressBook = {
+            "29AGNPC6762A1ZF": {
+                name: "Mane constructions",
+                address: "#48 1st floor, 3rd main, 6th cross, Sarvaboumanagar, Chikkalasandra, Bangalore 560061"
+            },
+            "29BAIPS9033A1ZL": {
+                name: "SRI BALAJI ENTERPRISES",
+                address: "#10/60, 3rd cross, 3rd main, Srinivasnagar, BSK 3rd stage, Bangalore-560085, Karnataka"
+            }
+        };
+
+        // Load address book from localStorage if available
+        if (localStorage.getItem('addressBook')) {
+            addressBook = JSON.parse(localStorage.getItem('addressBook'));
+        }
+
+        // Initialize
+        function init() {
+            updateAddressBookList();
+            updateInvoice(); // Initialize with default values
+        }
+
+        // Fetch address when GSTIN changes
+        function fetchAddress() {
+            const gstin = document.getElementById('input-buyer-gst').value.trim();
+            if (addressBook[gstin]) {
+                document.getElementById('input-buyer-name').value = addressBook[gstin].name;
+                document.getElementById('input-buyer-address').value = addressBook[gstin].address;
+            } else {
+                alert("GSTIN not found in address book. Please add it below.");
+                document.getElementById('new-gst').value = gstin;
+                document.getElementById('input-buyer-name').value = "";
+                document.getElementById('input-buyer-address').value = "";
+            }
+        }
+
+        // Add to address book
+        function addToAddressBook() {
+            const gstin = document.getElementById('new-gst').value.trim();
+            const name = document.getElementById('new-name').value.trim();
+            const address = document.getElementById('new-address').value.trim();
+
+            if (gstin && name && address) {
+                addressBook[gstin] = { name, address };
+                localStorage.setItem('addressBook', JSON.stringify(addressBook));
+                updateAddressBookList();
+                alert("Added to address book!");
+
+                // Clear fields
+                document.getElementById('new-gst').value = "";
+                document.getElementById('new-name').value = "";
+                document.getElementById('new-address').value = "";
+            } else {
+                alert("Please fill all fields");
+            }
+        }
+
+        // Update address book list display
+        function updateAddressBookList() {
+            const listDiv = document.getElementById('address-book-list');
+            let html = "<table border='1' cellpadding='5' style='width:100%; border-collapse:collapse;'>";
+            html += "<tr><th>GSTIN</th><th>Name</th><th>Address</th></tr>";
+
+            for (const gstin in addressBook) {
+                html += `<tr>
+                    <td>${gstin}</td>
+                    <td>${addressBook[gstin].name}</td>
+                    <td>${addressBook[gstin].address}</td>
+                </tr>`;
+            }
+
+            html += "</table>";
+            listDiv.innerHTML = html;
+        }
+
+        // Update invoice with form data
+        function updateInvoice() {
+            // Get form values
+            const invNo = document.getElementById('input-inv-no').value;
+            const invDate = new Date(document.getElementById('input-inv-date').value);
+            const ewayNo = document.getElementById('input-eway-no').value;
+            const buyerName = document.getElementById('input-buyer-name').value;
+            const buyerAddress = document.getElementById('input-buyer-address').value;
+            const buyerGST = document.getElementById('input-buyer-gst').value;
+            const vehicleNo = document.getElementById('input-vehicle-no').value;
+            const destination = document.getElementById('input-destination').value;
+            const quantity = parseFloat(document.getElementById('input-quantity').value);
+            const rate = parseFloat(document.getElementById('input-rate').value);
+
+            // Calculate amounts
+            const taxableValue = quantity * rate;
+            const cgst = taxableValue * 0.14;
+            const sgst = taxableValue * 0.14;
+            const totalTax = cgst + sgst;
+            const grandTotal = taxableValue + totalTax;
+
+            // Format date
+            const formattedDate = invDate.toLocaleDateString('en-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).replace(/\//g, '-');
+
+            // Update invoice display
+            document.getElementById('inv-no').textContent = invNo;
+            document.getElementById('inv-date').textContent = formattedDate;
+            document.getElementById('eway-no').textContent = ewayNo;
+            document.getElementById('buyer-name').textContent = buyerName;
+            document.getElementById('buyer-address').textContent = buyerAddress;
+            document.getElementById('buyer-gst').textContent = buyerGST;
+            document.getElementById('vehicle-no').textContent = vehicleNo;
+            document.getElementById('destination').textContent = destination;
+
+            // Update items table
+            const itemsTable = document.querySelector('.invoice-table tbody');
+            itemsTable.rows[0].cells[4].textContent = quantity;
+            itemsTable.rows[0].cells[5].textContent = rate.toFixed(2);
+            itemsTable.rows[0].cells[7].innerHTML = taxableValue.toFixed(2) + '<br>' + cgst.toFixed(2) + '<br>' + sgst.toFixed(2);
+            itemsTable.rows[1].cells[7].innerHTML = '₹ ' + grandTotal.toFixed(2);
+
+            // Update tax table
+            const taxTable = document.querySelectorAll('.invoice-table')[2];
+            taxTable.rows[1].cells[1].textContent = taxableValue.toFixed(2);
+            taxTable.rows[1].cells[2].innerHTML = '14%<br>' + cgst.toFixed(2);
+            taxTable.rows[1].cells[3].innerHTML = '14%<br>' + sgst.toFixed(2);
+            taxTable.rows[1].cells[4].textContent = totalTax.toFixed(2);
+            taxTable.rows[2].cells[1].textContent = taxableValue.toFixed(2);
+            taxTable.rows[2].cells[2].textContent = cgst.toFixed(2);
+            taxTable.rows[2].cells[3].textContent = sgst.toFixed(2);
+            taxTable.rows[2].cells[4].textContent = totalTax.toFixed(2);
+
+            // Update amounts in words
+            document.getElementById('amount-words').textContent = numberToWords(grandTotal) + ' rupees only';
+            document.getElementById('tax-words').textContent = numberToWords(totalTax) + ' rupees ' +
+                Math.round((totalTax % 1) * 100) + ' paise only';
+        }
+
+        // Simple number to words conversion (for demo)
+        function numberToWords(num) {
+            // Implement a proper number-to-words conversion here
+            // For now returning the number as string
+            return num.toFixed(2).toString();
+        }
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+
+</html>
