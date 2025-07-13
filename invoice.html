@@ -513,7 +513,7 @@ Bangalore 560061</textarea>
                 str += convertNumber(paise) + " paise";
             }
 
-            return str + " only";
+return (str.charAt(0).toUpperCase() + str.slice(1)) + " only";
 
             function convertNumber(num) {
                 if (num < 10) return single[num];
