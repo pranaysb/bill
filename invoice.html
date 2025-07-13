@@ -2,6 +2,26 @@
 <html lang="en">
 
 <head>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Your Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyB-YGDoIuisuY7PEMVe1IucERfVZX3cs_A",
+            authDomain: "invoice-cd620.firebaseapp.com",
+            databaseURL: "https://invoice-cd620-default-rtdb.firebaseio.com",
+            projectId: "invoice-cd620",
+            storageBucket: "invoice-cd620.firebasestorage.app",
+            messagingSenderId: "547792064813",
+            appId: "1:547792064813:web:5090598df4909948b403a4",
+            measurementId: "G-H2TTL5J7YN"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Tax Invoice</title>
@@ -265,15 +285,13 @@
                         <td class="amount-cell" id="display-quantity">122</td>
                         <td class="amount-cell" id="display-rate">316.98</td>
                         <td>Bag</td>
-                        <td class="amount-cell" id="display-amount" style="text-align: right;" 38,671.88<br>
-                            5,414.06<br>5,414.06</td>
+                        <td class="amount-cell" id="display-amount">38,671.88<br>5,414.06<br>5,414.06</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="text-right"><strong>Total</strong></td>
                         <td class="amount-cell" id="display-total-quantity">122</td>
                         <td colspan="2"></td>
-                        <td class="amount-cell" style="text-align: right;"><strong>₹ <span
-                                    id="display-grand-total">49,500.00</span></strong></td>
+                        <td class="amount-cell"><strong>₹ <span id="display-grand-total">49,500.00</span></strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -412,27 +430,31 @@ Bangalore 560061</textarea>
     </div>
 
     <script>
-        // Address Book Database
-        let addressBook = {
-            "29AGNPC6762A1ZF": {
-                name: "Mane constructions",
-                address: "#48 1st floor, 3rd main\n6th cross, Sarvaboumanagar\nChikkalasandra\nBangalore 560061"
-            },
-            "29BAIPS9033A1ZL": {
-                name: "SRI BALAJI ENTERPRISES",
-                address: "#10/60, 3rd cross, 3rd main\nSrinivasnagar, BSK 3rd stage\nBangalore-560085, Karnataka"
-            }
-        };
+        // Firebase Database Reference
+        const addressBookRef = firebase.database().ref('addressBook');
+        let addressBook = {};
 
-        // Load address book from localStorage if available
-        if (localStorage.getItem('addressBook')) {
-            addressBook = JSON.parse(localStorage.getItem('addressBook'));
+        // Initialize Firebase and load data
+        function init() {
+            setupAddressBookSync();
+            updateInvoice();
+
+            // Enable offline persistence
+            firebase.database().enablePersistence()
+                .catch((err) => {
+                    console.log("Offline support error: ", err);
+                });
         }
 
-        // Initialize
-        function init() {
-            updateAddressBookList();
-            updateInvoice(); // Initialize with default values
+        // Set up real-time sync for address book
+        function setupAddressBookSync() {
+            addressBookRef.on('value', (snapshot) => {
+                addressBook = snapshot.val() || {};
+                updateAddressBookList();
+
+                // Also store locally for offline use
+                localStorage.setItem('addressBook', JSON.stringify(addressBook));
+            });
         }
 
         // Fetch address when GSTIN changes
@@ -449,24 +471,25 @@ Bangalore 560061</textarea>
             }
         }
 
-        // Add to address book
-        function addToAddressBook() {
+        // Add to address book (syncs to all devices)
+        async function addToAddressBook() {
             const gstin = document.getElementById('new-gst').value.trim();
             const name = document.getElementById('new-name').value.trim();
             const address = document.getElementById('new-address').value.trim();
 
-            if (gstin && name && address) {
-                addressBook[gstin] = { name, address };
-                localStorage.setItem('addressBook', JSON.stringify(addressBook));
-                updateAddressBookList();
-                alert("Added to address book!");
+            if (!gstin || !name || !address) {
+                alert("Please fill all fields");
+                return;
+            }
 
+            try {
+                await addressBookRef.child(gstin).set({ name, address });
                 // Clear fields
                 document.getElementById('new-gst').value = "";
                 document.getElementById('new-name').value = "";
                 document.getElementById('new-address').value = "";
-            } else {
-                alert("Please fill all fields");
+            } catch (error) {
+                alert("Error saving: " + error.message);
             }
         }
 
@@ -474,18 +497,31 @@ Bangalore 560061</textarea>
         function updateAddressBookList() {
             const listDiv = document.getElementById('address-book-list');
             let html = "<table border='1' cellpadding='5' style='width:100%; border-collapse:collapse;'>";
-            html += "<tr><th>GSTIN</th><th>Name</th><th>Address</th></tr>";
+            html += "<tr><th>GSTIN</th><th>Name</th><th>Address</th><th>Action</th></tr>";
 
             for (const gstin in addressBook) {
-                html += `<tr>
+                html += `
+                <tr>
                     <td>${gstin}</td>
                     <td>${addressBook[gstin].name}</td>
                     <td style="white-space: pre-line;">${addressBook[gstin].address}</td>
+                    <td><button onclick="deleteAddress('${gstin}')">Delete</button></td>
                 </tr>`;
             }
 
             html += "</table>";
             listDiv.innerHTML = html;
+        }
+
+        // Delete address entry
+        async function deleteAddress(gstin) {
+            if (confirm("Delete this address?")) {
+                try {
+                    await addressBookRef.child(gstin).remove();
+                } catch (error) {
+                    alert("Error deleting: " + error.message);
+                }
+            }
         }
 
         // Number to words conversion function
@@ -603,7 +639,7 @@ Bangalore 560061</textarea>
                 format: 'a4'
             });
 
-            // Use the full invoice number as filename (replace slashes with dashes)
+            // Use the full invoice number as filename
             const invNo = document.getElementById('inv-no').textContent;
             const pdfName = invNo.replace(/\//g, '-') + '.pdf';
 
