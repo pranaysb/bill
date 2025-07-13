@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Tax Invoice</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
         @page {
             size: A4;
@@ -14,16 +16,16 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 10mm;
+            padding: 0;
             font-size: 12px;
+            background-color: #fff;
         }
 
         .invoice-container {
-            width: 190mm;
-            min-height: 277mm;
+            width: 210mm;
+            min-height: 297mm;
             margin: 0 auto;
-            border: 1px solid #000;
-            padding: 5mm;
+            padding: 10mm;
             box-sizing: border-box;
             position: relative;
         }
@@ -88,6 +90,10 @@
         .invoice-table td {
             padding: 5px;
             text-align: left;
+        }
+
+        .amount-cell {
+            text-align: right;
         }
 
         .text-right {
@@ -164,6 +170,17 @@
         @media print {
             .form-container {
                 display: none;
+            }
+
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .invoice-container {
+                padding: 10mm;
+                width: 210mm;
+                height: 297mm;
             }
         }
     </style>
@@ -245,16 +262,18 @@
                         <td>Cement<br>Cgst@14%<br>Sgst@14%</td>
                         <td>2523</td>
                         <td>28%</td>
-                        <td class="text-right" id="display-quantity">122</td>
-                        <td class="text-right" id="display-rate">316.98</td>
+                        <td class="amount-cell" id="display-quantity">122</td>
+                        <td class="amount-cell" id="display-rate">316.98</td>
                         <td>Bag</td>
-                        <td class="text-right" id="display-amount">38671.88<br>5414.06<br>5414.06</td>
+                        <td class="amount-cell" id="display-amount" style="text-align: right;" 38,671.88<br>
+                            5,414.06<br>5,414.06</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="text-right"><strong>Total</strong></td>
-                        <td class="text-right" id="display-total-quantity">122</td>
+                        <td class="amount-cell" id="display-total-quantity">122</td>
                         <td colspan="2"></td>
-                        <td class="text-right"><strong>₹ <span id="display-grand-total">49500.00</span></strong></td>
+                        <td class="amount-cell" style="text-align: right;"><strong>₹ <span
+                                    id="display-grand-total">49,500.00</span></strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -277,17 +296,17 @@
                 <tbody>
                     <tr>
                         <td>2523</td>
-                        <td class="text-right" id="taxable-value">38671.88</td>
-                        <td class="text-right">14%<br><span id="cgst-amount">5414.06</span></td>
-                        <td class="text-right">14%<br><span id="sgst-amount">5414.06</span></td>
-                        <td class="text-right" id="total-tax">10828.13</td>
+                        <td class="amount-cell" id="taxable-value">38,671.88</td>
+                        <td class="amount-cell">14%<br><span id="cgst-amount">5,414.06</span></td>
+                        <td class="amount-cell">14%<br><span id="sgst-amount">5,414.06</span></td>
+                        <td class="amount-cell" id="total-tax">10,828.13</td>
                     </tr>
                     <tr>
                         <td><strong>Total</strong></td>
-                        <td class="text-right" id="total-taxable-value">38671.88</td>
-                        <td class="text-right" id="total-cgst">5414.06</td>
-                        <td class="text-right" id="total-sgst">5414.06</td>
-                        <td class="text-right" id="total-tax-amount">10828.13</td>
+                        <td class="amount-cell" id="total-taxable-value">38,671.88</td>
+                        <td class="amount-cell" id="total-cgst">5,414.06</td>
+                        <td class="amount-cell" id="total-sgst">5,414.06</td>
+                        <td class="amount-cell" id="total-tax-amount">10,828.13</td>
                     </tr>
                 </tbody>
             </table>
@@ -369,6 +388,7 @@ Bangalore 560061</textarea>
         </div>
 
         <button onclick="updateInvoice()">Update Invoice</button>
+        <button onclick="downloadPDF()">Download PDF</button>
         <button onclick="window.print()">Print Invoice</button>
 
         <!-- Address Book Management -->
@@ -468,6 +488,49 @@ Bangalore 560061</textarea>
             listDiv.innerHTML = html;
         }
 
+        // Number to words conversion function
+        function numberToWords(num) {
+            const single = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+            const double = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+            const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+            const formatTenth = (digit, prev) => {
+                return 0 == digit ? "" : " " + (1 == digit ? double[prev] : tens[digit]);
+            };
+            const formatOther = (digit, next, denom) => {
+                return (0 != digit && 1 != next ? " " + single[digit] : "") + (0 != next || digit > 0 ? " " + denom : "");
+            };
+
+            let str = "";
+            let rupees = Math.floor(num);
+            let paise = Math.round((num % 1) * 100);
+
+            if (rupees > 0) {
+                str += convertNumber(rupees) + " rupees";
+            }
+
+            if (paise > 0) {
+                if (rupees > 0) str += " ";
+                str += convertNumber(paise) + " paise";
+            }
+
+            return str + " only";
+
+            function convertNumber(num) {
+                if (num < 10) return single[num];
+                if (num < 20) return double[num - 10];
+                if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? " " + single[num % 10] : "");
+                if (num < 1000) return single[Math.floor(num / 100)] + " hundred" + (num % 100 ? " and " + convertNumber(num % 100) : "");
+                if (num < 100000) return convertNumber(Math.floor(num / 1000)) + " thousand" + (num % 1000 ? " " + convertNumber(num % 1000) : "");
+                if (num < 10000000) return convertNumber(Math.floor(num / 100000)) + " lakh" + (num % 100000 ? " " + convertNumber(num % 100000) : "");
+                return convertNumber(Math.floor(num / 10000000)) + " crore" + (num % 10000000 ? " " + convertNumber(num % 10000000) : "");
+            }
+        }
+
+        // Format number with commas
+        function formatNumber(num) {
+            return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
         // Update invoice with form data
         function updateInvoice() {
             // Get form values
@@ -506,39 +569,69 @@ Bangalore 560061</textarea>
             document.getElementById('vehicle-no').textContent = vehicleNo;
             document.getElementById('destination').textContent = destination;
 
-            // Update items table
+            // Update items table with formatted numbers
             document.getElementById('display-quantity').textContent = quantity;
-            document.getElementById('display-rate').textContent = ratePerBag.toFixed(2);
-            document.getElementById('display-amount').innerHTML = taxableValue.toFixed(2) + '<br>' + cgst.toFixed(2) + '<br>' + sgst.toFixed(2);
+            document.getElementById('display-rate').textContent = formatNumber(ratePerBag);
+            document.getElementById('display-amount').innerHTML =
+                formatNumber(taxableValue) + '<br>' +
+                formatNumber(cgst) + '<br>' +
+                formatNumber(sgst);
             document.getElementById('display-total-quantity').textContent = quantity;
-            document.getElementById('display-grand-total').textContent = grandTotal.toFixed(2);
+            document.getElementById('display-grand-total').textContent = formatNumber(grandTotal);
 
-            // Update tax table
-            document.getElementById('taxable-value').textContent = taxableValue.toFixed(2);
-            document.getElementById('cgst-amount').textContent = cgst.toFixed(2);
-            document.getElementById('sgst-amount').textContent = sgst.toFixed(2);
-            document.getElementById('total-tax').textContent = (cgst + sgst).toFixed(2);
-            document.getElementById('total-taxable-value').textContent = taxableValue.toFixed(2);
-            document.getElementById('total-cgst').textContent = cgst.toFixed(2);
-            document.getElementById('total-sgst').textContent = sgst.toFixed(2);
-            document.getElementById('total-tax-amount').textContent = (cgst + sgst).toFixed(2);
+            // Update tax table with formatted numbers
+            document.getElementById('taxable-value').textContent = formatNumber(taxableValue);
+            document.getElementById('cgst-amount').textContent = formatNumber(cgst);
+            document.getElementById('sgst-amount').textContent = formatNumber(sgst);
+            document.getElementById('total-tax').textContent = formatNumber(cgst + sgst);
+            document.getElementById('total-taxable-value').textContent = formatNumber(taxableValue);
+            document.getElementById('total-cgst').textContent = formatNumber(cgst);
+            document.getElementById('total-sgst').textContent = formatNumber(sgst);
+            document.getElementById('total-tax-amount').textContent = formatNumber(cgst + sgst);
 
             // Update amounts in words
-            document.getElementById('amount-words').textContent = numberToWords(grandTotal) + ' rupees only';
-            document.getElementById('tax-words').textContent = numberToWords(cgst + sgst) + ' rupees ' +
-                Math.round(((cgst + sgst) % 1) * 100) + ' paise only';
+            document.getElementById('amount-words').textContent = numberToWords(grandTotal);
+            document.getElementById('tax-words').textContent = numberToWords(cgst + sgst);
         }
 
-        // Simple number to words conversion (for demo)
-        function numberToWords(num) {
-            // Implement a proper number-to-words conversion here
-            // For now returning the number as string
-            return num.toFixed(2).toString();
+        // Download as PDF
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            // Use the full invoice number as filename (replace slashes with dashes)
+            const invNo = document.getElementById('inv-no').textContent;
+            const pdfName = invNo.replace(/\//g, '-') + '.pdf';
+
+            // Get the invoice element
+            const invoiceElement = document.getElementById('invoice');
+
+            // Use html2canvas to capture the invoice as an image
+            html2canvas(invoiceElement, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                backgroundColor: '#fff'
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 width in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+
+                // Add image to PDF
+                doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                doc.save(pdfName);
+            });
         }
 
         // Initialize on load
         window.onload = init;
     </script>
+    <!-- Add html2canvas library for proper PDF generation -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </body>
 
 </html>
