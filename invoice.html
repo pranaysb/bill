@@ -95,6 +95,15 @@
         .amount-cell {
             text-align: right;
         }
+        
+        .tax-amount-cell {
+            text-align: right;
+            vertical-align: top;
+        }
+        
+        .tax-breakdown-cell {
+            vertical-align: top;
+        }
 
         .text-right {
             text-align: right;
@@ -166,6 +175,10 @@
             display: inline-block;
             vertical-align: top;
         }
+        
+        .spacer {
+            height: 20px;
+        }
 
         @media print {
             .form-container {
@@ -208,7 +221,7 @@
                     Mobile: 9483949650 | Email: seelambalaji1969@gmail.com
                 </div>
                 <div>
-                    Invoice No: <span id="inv-no">SBE 061/2021-22</span><br>
+                    Invoice No: <span id="inv-no">SBE 2021-22/061</span><br>
                     Dated: <span id="inv-date">31-05-2025</span><br>
                     E-way No: <span id="eway-no"></span><br>
                     Supplier's Ref: <span id="supplier-ref"></span><br>
@@ -258,18 +271,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Cement<br>Cgst@14%<br>Sgst@14%</td>
-                        <td>2523</td>
-                        <td>28%</td>
-                        <td class="amount-cell" id="display-quantity">122</td>
-                        <td class="amount-cell" id="display-rate">316.98</td>
-                        <td>Bag</td>
-                        <td class="amount-cell" id="display-amount">38,671.88<br>5,414.06<br>5,414.06</td>
+                        <td style="vertical-align: top;">1</td>
+                        <td style="vertical-align: top;">Cement<br>Cgst@14%<br>Sgst@14%</td>
+                        <td style="vertical-align: top; text-align: center;">2523</td>
+                        <td style="vertical-align: top; text-align: center;">28%</td>
+                        <td class="amount-cell" id="display-quantity" style="vertical-align: top;">122</td>
+                        <td class="amount-cell" id="display-rate" style="vertical-align: top;">405.74</td>
+                        <td style="vertical-align: top;">Bag</td>
+                        <td class="amount-cell" id="display-amount" style="vertical-align: top;">38,671.88<br>5,414.06<br>5,414.06</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="text-right"><strong>Total</strong></td>
-                        <td class="amount-cell" id="display-total-quantity">122</td>
+                        <td class="amount-cell" id="display-total-quantity" style="vertical-align: top;">122</td>
                         <td colspan="2"></td>
                         <td class="amount-cell"><strong>₹ <span id="display-grand-total">49,500.00</span></strong></td>
                     </tr>
@@ -278,6 +291,8 @@
             <div>[Amount chargeable in words] <em id="amount-words">Forty nine thousand five hundred rupees only</em>
             </div>
         </div>
+
+        <div class="spacer"></div>
 
         <!-- Tax Breakdown -->
         <div class="border-box">
@@ -293,24 +308,26 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>2523</td>
-                        <td class="amount-cell" id="taxable-value">38,671.88</td>
-                        <td class="amount-cell">14%<br><span id="cgst-amount">5,414.06</span></td>
-                        <td class="amount-cell">14%<br><span id="sgst-amount">5,414.06</span></td>
-                        <td class="amount-cell" id="total-tax">10,828.13</td>
+                        <td class="tax-breakdown-cell">2523</td>
+                        <td class="tax-amount-cell" id="taxable-value">38,671.88</td>
+                        <td class="tax-breakdown-cell">14%<br><span id="cgst-amount" class="tax-amount-cell">5,414.06</span></td>
+                        <td class="tax-breakdown-cell">14%<br><span id="sgst-amount" class="tax-amount-cell">5,414.06</span></td>
+                        <td class="tax-amount-cell" id="total-tax">10,828.13</td>
                     </tr>
                     <tr>
                         <td><strong>Total</strong></td>
-                        <td class="amount-cell" id="total-taxable-value">38,671.88</td>
-                        <td class="amount-cell" id="total-cgst">5,414.06</td>
-                        <td class="amount-cell" id="total-sgst">5,414.06</td>
-                        <td class="amount-cell" id="total-tax-amount">10,828.13</td>
+                        <td class="tax-amount-cell" id="total-taxable-value">38,671.88</td>
+                        <td class="tax-amount-cell" id="total-cgst">5,414.06</td>
+                        <td class="tax-amount-cell" id="total-sgst">5,414.06</td>
+                        <td class="tax-amount-cell" id="total-tax-amount">10,828.13</td>
                     </tr>
                 </tbody>
             </table>
             <div>[Tax amount in words] <em id="tax-words">Ten thousand eight hundred twenty eight rupees thirteen paise
                     only</em></div>
         </div>
+
+        <div class="spacer"></div>
 
         <!-- Footer -->
         <div class="border-box">
@@ -342,7 +359,8 @@
         <h2>Invoice Details</h2>
         <div class="form-group">
             <label>Invoice Number:</label>
-            <input type="text" id="input-inv-no" value="SBE 061/2025-26">
+            <input type="text" id="input-inv-no" value="061" placeholder="Enter only the number part">
+            <span>SBE 2021-22/</span>
         </div>
         <div class="form-group">
             <label>Date:</label>
@@ -545,7 +563,7 @@ Bangalore 560061</textarea>
         // Update invoice with form data
         function updateInvoice() {
             // Get form values
-            const invNo = document.getElementById('input-inv-no').value;
+            const invNo = "SBE 2021-22/" + document.getElementById('input-inv-no').value;
             const invDate = new Date(document.getElementById('input-inv-date').value);
             const ewayNo = document.getElementById('input-eway-no').value;
             const buyerName = document.getElementById('input-buyer-name').value;
