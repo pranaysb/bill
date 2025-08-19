@@ -2,10 +2,6 @@
 <html lang="en">
 
 <head>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="firebase.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Tax Invoice</title>
@@ -414,31 +410,27 @@ Bangalore 560061</textarea>
     </div>
 
     <script>
-        // Firebase Database Reference
-        const addressBookRef = firebase.database().ref('addressBook');
+        // Address book using localStorage
         let addressBook = {};
 
-        // Initialize Firebase and load data
+        // Initialize and load data
         function init() {
-            setupAddressBookSync();
+            loadAddressBook();
             updateInvoice();
-
-            // Enable offline persistence
-            firebase.database().enablePersistence()
-                .catch((err) => {
-                    console.log("Offline support error: ", err);
-                });
         }
 
-        // Set up real-time sync for address book
-        function setupAddressBookSync() {
-            addressBookRef.on('value', (snapshot) => {
-                addressBook = snapshot.val() || {};
+        // Load address book from localStorage
+        function loadAddressBook() {
+            const storedAddressBook = localStorage.getItem('addressBook');
+            if (storedAddressBook) {
+                addressBook = JSON.parse(storedAddressBook);
                 updateAddressBookList();
+            }
+        }
 
-                // Also store locally for offline use
-                localStorage.setItem('addressBook', JSON.stringify(addressBook));
-            });
+        // Save address book to localStorage
+        function saveAddressBook() {
+            localStorage.setItem('addressBook', JSON.stringify(addressBook));
         }
 
         // Fetch address when GSTIN changes
@@ -455,8 +447,8 @@ Bangalore 560061</textarea>
             }
         }
 
-        // Add to address book (syncs to all devices)
-        async function addToAddressBook() {
+        // Add to address book
+        function addToAddressBook() {
             const gstin = document.getElementById('new-gst').value.trim();
             const name = document.getElementById('new-name').value.trim();
             const address = document.getElementById('new-address').value.trim();
@@ -466,21 +458,22 @@ Bangalore 560061</textarea>
                 return;
             }
 
-            try {
-                await addressBookRef.child(gstin).set({ name, address });
-                // Clear fields
-                document.getElementById('new-gst').value = "";
-                document.getElementById('new-name').value = "";
-                document.getElementById('new-address').value = "";
-            } catch (error) {
-                alert("Error saving: " + error.message);
-            }
+            addressBook[gstin] = { name, address };
+            saveAddressBook();
+            updateAddressBookList();
+            
+            // Clear fields
+            document.getElementById('new-gst').value = "";
+            document.getElementById('new-name').value = "";
+            document.getElementById('new-address').value = "";
+            
+            alert("Address added successfully!");
         }
 
         // Update address book list display
         function updateAddressBookList() {
             const listDiv = document.getElementById('address-book-list');
-            let html = "<table border='1' cellpadding='5' style='width:100%; border-collapse:collapse;'>";
+            let html = "<table border='1' cellpadding='5' style='width:100%; border-collapse:collapse; font-size: 12px;'>";
             html += "<tr><th>GSTIN</th><th>Name</th><th>Address</th><th>Action</th></tr>";
 
             for (const gstin in addressBook) {
@@ -498,13 +491,11 @@ Bangalore 560061</textarea>
         }
 
         // Delete address entry
-        async function deleteAddress(gstin) {
+        function deleteAddress(gstin) {
             if (confirm("Delete this address?")) {
-                try {
-                    await addressBookRef.child(gstin).remove();
-                } catch (error) {
-                    alert("Error deleting: " + error.message);
-                }
+                delete addressBook[gstin];
+                saveAddressBook();
+                updateAddressBookList();
             }
         }
 
@@ -533,7 +524,7 @@ Bangalore 560061</textarea>
                 str += convertNumber(paise) + " paise";
             }
 
-return (str.charAt(0).toUpperCase() + str.slice(1)) + " only";
+            return (str.charAt(0).toUpperCase() + str.slice(1)) + " only";
 
             function convertNumber(num) {
                 if (num < 10) return single[num];
@@ -614,7 +605,7 @@ return (str.charAt(0).toUpperCase() + str.slice(1)) + " only";
             document.getElementById('tax-words').textContent = numberToWords(cgst + sgst);
         }
 
-        // Download as PDF
+        // Download as PDF (text-based for smaller file size)
         function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({
@@ -627,31 +618,124 @@ return (str.charAt(0).toUpperCase() + str.slice(1)) + " only";
             const invNo = document.getElementById('inv-no').textContent;
             const pdfName = invNo.replace(/\//g, '-') + '.pdf';
 
-            // Get the invoice element
-            const invoiceElement = document.getElementById('invoice');
-
-            // Use html2canvas to capture the invoice as an image
-            html2canvas(invoiceElement, {
-                scale: 2,
-                logging: false,
-                useCORS: true,
-                backgroundColor: '#fff'
-            }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 210; // A4 width in mm
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-
-                // Add image to PDF
-                doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-                doc.save(pdfName);
+            // Set font
+            doc.setFont("helvetica");
+            
+            // Add header
+            doc.setFontSize(16);
+            doc.setFont(undefined, 'bold');
+            doc.text("TAX INVOICE", 105, 15, { align: 'center' });
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            
+            // Add seller info
+            doc.text("SRI BALAJI ENTERPRISES", 20, 25);
+            doc.text("#10/60, 3rd cross, 3rd main,", 20, 30);
+            doc.text("Srinivasnagar, BSK 3rd stage,", 20, 35);
+            doc.text("Bangalore-560085, Karnataka", 20, 40);
+            doc.text("GSTIN: 29BAIPS9033A1ZL", 20, 45);
+            doc.text("Mobile: 9483949650 | Email: seelambalaji1969@gmail.com", 20, 50);
+            
+            // Add invoice details
+            doc.text(`Invoice No: ${document.getElementById('inv-no').textContent}`, 140, 25);
+            doc.text(`Dated: ${document.getElementById('inv-date').textContent}`, 140, 30);
+            doc.text(`E-way No: ${document.getElementById('eway-no').textContent}`, 140, 35);
+            
+            // Add buyer info
+            doc.text(`Buyer: ${document.getElementById('buyer-name').textContent}`, 20, 60);
+            
+            // Split address into lines
+            const addressLines = doc.splitTextToSize(document.getElementById('buyer-address').textContent, 80);
+            doc.text(addressLines, 20, 65);
+            
+            doc.text(`GSTIN: ${document.getElementById('buyer-gst').textContent}`, 20, 75);
+            
+            // Add items table
+            doc.autoTable({
+                startY: 85,
+                head: [['Sl. No', 'Description', 'HSN/SAC', 'GST RATE', 'Quantity', 'Rate', 'per', 'Amount']],
+                body: [
+                    [
+                        '1', 
+                        'Cement\nCgst@14%\nSgst@14%', 
+                        '2523', 
+                        '28%', 
+                        document.getElementById('display-quantity').textContent, 
+                        document.getElementById('display-rate').textContent, 
+                        'Bag', 
+                        document.getElementById('display-amount').textContent.replace(/<br>/g, '\n')
+                    ],
+                    [
+                        {content: 'Total', colSpan: 4, styles: {halign: 'right'}}, 
+                        document.getElementById('display-total-quantity').textContent, 
+                        '', 
+                        '', 
+                        '₹ ' + document.getElementById('display-grand-total').textContent
+                    ]
+                ],
+                theme: 'grid',
+                styles: {fontSize: 8},
+                headStyles: {fontStyle: 'bold'},
+                bodyStyles: {minCellHeight: 10}
             });
+            
+            // Add amount in words
+            doc.text(`Amount chargeable in words: ${document.getElementById('amount-words').textContent}`, 20, doc.lastAutoTable.finalY + 10);
+            
+            // Add tax table
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 15,
+                head: [['HSN/SAC', 'Taxable Value', 'Central Tax', 'State Tax', 'Total Tax Amount']],
+                body: [
+                    [
+                        '2523', 
+                        document.getElementById('taxable-value').textContent, 
+                        `14%\n${document.getElementById('cgst-amount').textContent}`, 
+                        `14%\n${document.getElementById('sgst-amount').textContent}`, 
+                        document.getElementById('total-tax').textContent
+                    ],
+                    [
+                        {content: 'Total', styles: {fontStyle: 'bold'}}, 
+                        {content: document.getElementById('total-taxable-value').textContent, styles: {fontStyle: 'bold'}}, 
+                        {content: document.getElementById('total-cgst').textContent, styles: {fontStyle: 'bold'}}, 
+                        {content: document.getElementById('total-sgst').textContent, styles: {fontStyle: 'bold'}}, 
+                        {content: document.getElementById('total-tax-amount').textContent, styles: {fontStyle: 'bold'}}
+                    ]
+                ],
+                theme: 'grid',
+                styles: {fontSize: 8},
+                headStyles: {fontStyle: 'bold'},
+                bodyStyles: {minCellHeight: 10}
+            });
+            
+            // Add tax amount in words
+            doc.text(`Tax amount in words: ${document.getElementById('tax-words').textContent}`, 20, doc.lastAutoTable.finalY + 10);
+            
+            // Add declaration
+            doc.text("Declaration:", 20, doc.lastAutoTable.finalY + 20);
+            doc.text("1) 18% Interest will be charged on all invoices not paid within the said time from the date of invoice.", 20, doc.lastAutoTable.finalY + 25);
+            doc.text("2) Goods once sold will not be taken back or exchanged. Our responsibility ceases soon after the goods.", 20, doc.lastAutoTable.finalY + 30);
+            
+            doc.text("Company's Bank Details", 20, doc.lastAutoTable.finalY + 40);
+            doc.text("BankName: AXIS BANK", 20, doc.lastAutoTable.finalY + 45);
+            doc.text("A/c No.: 920020056606334", 20, doc.lastAutoTable.finalY + 50);
+            doc.text("Branch & IFS Code: UTIB0003190", 20, doc.lastAutoTable.finalY + 55);
+            
+            // Add signature area
+            doc.text("Customer's Seal and Signature", 20, doc.lastAutoTable.finalY + 70);
+            doc.text("For Sri Balaji Enterprises\nAuthorised Signatory", 150, doc.lastAutoTable.finalY + 70, {align: 'right'});
+            
+            // Add footer
+            doc.text("SUBJECT TO BANGALORE JURISDICTION", 105, doc.lastAutoTable.finalY + 80, {align: 'center'});
+            doc.text("This is a Computer Generated Invoice", 105, doc.lastAutoTable.finalY + 85, {align: 'center', fontStyle: 'italic'});
+            
+            // Save the PDF
+            doc.save(pdfName);
         }
 
         // Initialize on load
         window.onload = init;
     </script>
-    <!-- Add html2canvas library for proper PDF generation -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </body>
 
 </html>
